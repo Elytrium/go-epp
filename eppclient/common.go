@@ -20,6 +20,14 @@ func wrapDomainName(domainName string) (string, error) {
 }
 
 func wrapDomainData(domainData *types.EPPDomainData) error {
+	if domainData == nil {
+		return nil
+	}
+
+	if domainData.NS == nil {
+		return nil
+	}
+
 	for i, o := range domainData.NS.HostObjects {
 		str, err := wrapDomainName(o)
 		if err != nil {

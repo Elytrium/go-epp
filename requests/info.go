@@ -76,12 +76,16 @@ type EPPInfoRegistrarResponse struct {
 }
 
 func NewRIPNEPPInfoContactRequest(contactID, authinfo string) EPPCommandRequest {
+	var contactAuthInfo *types.EPPContactAuthInfo = nil
+	if authinfo != "" {
+		contactAuthInfo = &types.EPPContactAuthInfo{
+			Password: authinfo,
+		}
+	}
 	return WrapEPPCommand(EPPInfoRequest{
 		Body: EPPInfoContactRequest{
 			ContactID: contactID,
-			AuthInfo: &types.EPPContactAuthInfo{
-				Password: authinfo,
-			},
+			AuthInfo:  contactAuthInfo,
 		},
 	})
 }
@@ -95,12 +99,16 @@ func NewRIPNEPPInfoHostRequest(hostName string) EPPCommandRequest {
 }
 
 func NewRIPNEPPInfoDomainRequest(domainName, authinfo string) EPPCommandRequest {
+	var domainAuthInfo *types.EPPDomainAuthInfo = nil
+	if authinfo != "" {
+		domainAuthInfo = &types.EPPDomainAuthInfo{
+			Password: authinfo,
+		}
+	}
 	return WrapEPPCommand(EPPInfoRequest{
 		Body: EPPInfoDomainRequest{
 			DomainName: domainName,
-			AuthInfo: &types.EPPDomainAuthInfo{
-				Password: authinfo,
-			},
+			AuthInfo:   domainAuthInfo,
 		},
 	})
 }
